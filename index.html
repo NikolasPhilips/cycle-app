@@ -40,6 +40,22 @@ button.ghost{background:none;color:var(--mut);font-weight:400;text-decoration:un
 .chip{border:1px solid var(--line);background:none;color:var(--fg);font-weight:400;padding:8px 12px;border-radius:20px}
 .chip.on{background:var(--acc);color:#fff;border-color:var(--acc)}
 .hide{display:none}
+#splash{position:fixed;inset:0;z-index:40;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 24px 14vh;text-align:center;transition:opacity .3s ease}
+#splash.out{opacity:0;pointer-events:none}
+#splash.hide{display:none}
+#splash .spx{display:none;top:calc(12px + env(safe-area-inset-top,0px));animation:none}
+#splash.info .spx{display:flex;align-items:center;justify-content:center}
+#splash.info .ld{display:none}
+#splash>*{animation:up .45s cubic-bezier(.2,.7,.2,1) both}
+#splash>:nth-child(2){animation-delay:.06s}#splash>:nth-child(3){animation-delay:.12s}#splash>:nth-child(4){animation-delay:.18s}
+@keyframes up{from{opacity:0;transform:translateY(10px)}}
+.sp{font:600 22px/1.3 "Iowan Old Style",Georgia,serif;color:var(--acc)}
+.sp.m{color:var(--mut);font-weight:400}
+.spl{display:flex;align-items:center;gap:8px;margin-top:16px}
+.lnk{background:none;padding:0;border-radius:0;font:600 22px/1.3 "Iowan Old Style",Georgia,serif;color:var(--acc);text-decoration:underline;text-underline-offset:4px}
+.ld{width:150px;height:4px;border-radius:2px;background:var(--line);overflow:hidden;margin-top:30px}
+.ld i{display:block;height:100%;width:0;background:var(--acc);border-radius:2px;animation:ld 2.2s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes ld{to{width:100%}}
 .tabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:3px;margin-bottom:12px}
 .tab{flex:1;background:none;color:var(--mut);padding:9px}
 .tab.on{background:var(--acc);color:#fff}
@@ -51,17 +67,25 @@ label{display:block;font-size:14px;font-weight:600}
 .sheet{position:relative}
 .tg{flex:1;padding:10px 6px;font-size:15px;white-space:nowrap}
 .gray{background:rgba(128,115,122,.18);color:var(--fg);font-weight:400;padding:7px 14px;font-size:14px}
-.top{display:flex;gap:8px;margin-bottom:12px}
+#calv>.card{touch-action:pan-y}
+.top{display:flex;gap:8px;margin-bottom:12px;align-items:center}
 .top .tabs{flex:1;margin-bottom:0}
-.gear{width:46px;padding:0;background:var(--card);border:1px solid var(--line);color:var(--fg);display:flex;align-items:center;justify-content:center;border-radius:14px}
+.gear{width:38px;height:38px;flex:none;padding:0;background:var(--card);border:1px solid var(--line);color:var(--fg);display:flex;align-items:center;justify-content:center;border-radius:12px}
 .chk{display:flex;gap:10px;align-items:center;font-weight:600;margin:8px 0}
 .chk input{width:20px;height:20px;accent-color:var(--acc);margin:0}
 .x{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;padding:0;font-size:22px;line-height:1;background:var(--card);color:var(--mut)}
 </style>
 </head>
 <body>
+<div id="splash">
+  <button class="x spx" id="spx" aria-label="Закрыть">×</button>
+  <div class="sp">Ваши Алиски под контролем</div>
+  <div class="sp m">©NikolasPhilips</div>
+  <div class="spl"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="var(--acc)"/><path fill="#fff" d="M5.4 11.7l11.9-4.6c.6-.2 1.1.1.9.9l-2 9.5c-.1.6-.7.8-1.2.5l-3-2.2-1.5 1.4c-.2.2-.4.2-.5-.1l-.3-3.1 5.6-5c.2-.2 0-.3-.3-.1l-6.9 4.3-3-.9c-.6-.2-.6-.6.3-.6z"/></svg><button class="lnk" id="spl">@nikolas7philips</button></div>
+  <div class="ld"><i></i></div>
+</div>
 <main>
-  <div class="top"><button class="gear" id="gear" aria-label="Настройки"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button><div class="tabs"><button class="tab on" data-t="home">Главная</button><button class="tab" data-t="cal">Календарь</button></div></div>
+  <div class="top"><button class="gear" id="gear" aria-label="Настройки"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button><div class="tabs"><button class="tab on" data-t="home">Главная</button><button class="tab" data-t="cal">Календарь</button></div><button class="gear" id="info" aria-label="Информация"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="7" x2="12" y2="13"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg></button></div>
   <section id="home"></section>
   <section id="calv" class="hide">
   <div class="card">
@@ -73,7 +97,13 @@ label{display:block;font-size:14px;font-weight:600}
   </div>
   <div class="card" id="st"></div>
   </section>
+  <div class="card" style="text-align:center">
+    <p style="margin:0 0 4px"><b>Ваша Алиска под контролем</b></p>
+    <p class="mut" style="margin:0">Разработчик: ©Nikolas Philips<br>™SPower Corp.</p>
+    <button class="gray" id="donate" style="margin-top:12px">Задонатить разработчику</button>
+  </div>
   <div class="card">
+    <p class="mut" style="font-size:11px;margin:0 0 6px">Версия 1.6</p>
     <p class="mut">Приложение не является медицинским и не заменяет врача. Прогноз по датам приблизительный и не подходит как метод контрацепции.</p>
     <button class="ghost" id="del">Удалить все мои данные</button>
   </div>
@@ -137,6 +167,9 @@ if(tg){try{tg.ready();tg.expand()}catch(e){}
   if(t.hint_color)r.setProperty('--mut',t.hint_color);}
 const hap=()=>{try{tg.HapticFeedback.selectionChanged()}catch(e){}};
 const $=s=>document.querySelector(s);
+function resetView(){try{const a=document.activeElement;if(a&&a.blur)a.blur();window.scrollTo(0,0);if(tg&&tg.expand)tg.expand()}catch(e){}}
+document.addEventListener('focusout',e=>{if(/^(INPUT|TEXTAREA)$/.test(e.target.tagName))setTimeout(resetView,80)});
+window.addEventListener('resize',()=>{const a=document.activeElement;if(!a||!/^(INPUT|TEXTAREA)$/.test(a.tagName))window.scrollTo(0,0)});
 function addShortcut(){try{if(tg&&tg.addToHomeScreen)tg.addToHomeScreen()}catch(e){}}
 
 /* ---------- хранилище: CloudStorage Telegram, вне Telegram — localStorage ---------- */
@@ -250,17 +283,17 @@ function renderFc(A){
   el.innerHTML='<p class="mut">Следующие месячные</p><div class="big">'+head+'</div><p>'+sub+'</p><p class="mut">Уверенность прогноза: '+conf+'. Овуляция ориентировочно около '+fd(ov)+' (по датам это неточно).</p>';
 }
 function renderStats(m){
-  const A=m.A,el=$('#st'),L=m.real;let h='<h2>Ваш цикл</h2>';
+  const A=m.A,el=$('#st'),L=m.real;let h='<h2>Ваш цикл</h2><p class="mut" style="font-size:13px">Длина цикла считается от первого дня одних месячных до первого дня следующих.</p>';
   if(!A.ok.length){el.innerHTML=h+'<p class="mut">Статистика появится после двух отмеченных начал месячных.</p>';return}
-  const F=L.length?forecast(L):null,last=A.ok[A.ok.length-1];
-  if(L.length)h+='<p>Средняя длина: <b>'+Math.round(avg(L))+' дн.</b> (от '+Math.min(...L)+' до '+Math.max(...L)+'). Месячные в среднем идут '+periodLen(A.S)+' дн.</p>';
+  const F=L.length?forecast([P().cyc,...L]):null,last=A.ok[A.ok.length-1];
+  if(L.length)h+='<p>Средняя длина цикла: <b>'+Math.round(avg(L))+' дн.</b> (от '+Math.min(...L)+' до '+Math.max(...L)+'). Месячные в среднем идут '+periodLen(A.S)+' дн.</p>';
   if(L.length>=4){const d=avg(L.slice(-3))-avg(L.slice(0,-3));if(Math.abs(d)>=2)h+='<p>Тренд: последние циклы '+(d>0?'удлиняются':'укорачиваются')+' примерно на '+Math.abs(Math.round(d))+' дн.</p>'}
-  const hiR=P().age<18?45:35;if(last.len<21||last.len>hiR)h+='<div class="warn">Последний цикл ('+last.len+' дн.) вне типичных 21–'+hiR+' дней. Если так повторяется, стоит обсудить это с врачом.</div>';
-  m.out.forEach(c=>{const ev=evNames(c);h+='<div class="warn">Цикл с '+fd(c.a)+' по '+fd(c.b)+' ('+c.len+' дн.) сильно отличается от остальных и не учтён в прогнозе, чтобы один сбой его не портил.'+(ev?' Отмечено в этом цикле: '+ev+'.':' Отметьте причину (стресс, болезнь, перелёт) в календаре.')+' Если такие циклы повторятся, приложение начнёт их учитывать.</div>'});
+  const hiR=P().age<18?45:35;if(last.len<21||last.len>hiR)h+='<div class="warn">Последний цикл ('+last.len+' дн.: от начала месячных '+fd(last.a)+' до начала следующих '+fd(last.b)+') вне типичных 21–'+hiR+' дней. Если так повторяется, стоит обсудить это с врачом.</div>';
+  m.out.forEach(c=>{const ev=evNames(c);h+='<div class="warn">Цикл длиной '+c.len+' дн. (от начала месячных '+fd(c.a)+' до начала следующих '+fd(c.b)+') сильно отличается от остальных и не учтён в прогнозе, чтобы один сбой его не портил.'+(ev?' Отмечено в этом цикле: '+ev+'.':' Отметьте причину (стресс, болезнь, перелёт) в календаре.')+' Если такие циклы повторятся, приложение начнёт их учитывать.</div>'});
   const skipped=A.all.length-A.ok.length;
   if(skipped)h+='<p class="mut">Не учтено промежутков вне 15–60 дней: '+skipped+' (вероятно, пропущены отметки).</p>';
   h+='<h2 style="margin-top:12px">Самопроверка прогноза</h2>';
-  h+=F&&F.tests>=2?'<p>На ваших прошлых циклах прогноз попадал в окно ±'+F.h+' дн. в '+F.hits+' из '+F.tests+' случаев. Лучше всего для вас работает метод: '+MN[F.best]+'.'+(Math.abs(F.bias)>=1?' Внесена поправка на смещение '+(F.bias>0?'+':'')+F.bias.toFixed(1)+' дн.':'')+'</p>':'<p class="mut">Нужно хотя бы 4 цикла, чтобы приложение проверило свои прогнозы на ваших данных.</p>';
+  h+=F&&F.tests>=2?'<p>На ваших прошлых циклах прогноз попадал в окно ±'+F.h+' дн. в '+F.hits+' из '+F.tests+' случаев. Лучше всего для вас работает метод: '+MN[F.best]+'.'+(Math.abs(F.bias)>=1?' Внесена поправка на смещение '+(F.bias>0?'+':'')+F.bias.toFixed(1)+' дн.':'')+'</p>':'<p class="mut">Нужно хотя бы 4 отмеченных начала месячных (3 цикла), чтобы приложение проверило свои прогнозы на ваших данных.</p>';
   const ins=insights(A);
   if(ins.length)h+='<h2 style="margin-top:12px">Ваши закономерности</h2>'+ins.map(t=>'<p>'+t+'</p>').join('');
   el.innerHTML=h;
@@ -271,7 +304,7 @@ function renderCal(){
   for(let i=0;i<off;i++)h+='<i></i>';
   for(let d=1;d<=dim;d++){
     const s=y+'-'+pad(m+1)+'-'+pad(d),e=data[s];let c='d';
-    if(e&&e.p)c+=' p';else if(FC&&FC.days[s]){c+=' w';if(FC.days[s]===2)c+=' n'}
+    if(e&&e.p)c+=' p';else if(FC&&FC.days[s])c+=' w';
     if(s===today)c+=' t';if(e&&e.s&&e.s.length)c+=' e';
     h+='<button class="'+c+'" data-d="'+s+'">'+d+'</button>';
   }
@@ -338,9 +371,9 @@ function model(){
   const real=all.filter((_,i)=>keep[i]),out=A.ok.filter((_,i)=>!keep[i]);
   if(!last)return{A,real,out};
   const n=real.length,F=forecast([c0,...real]),since=diff(last,today);let k=1;
-  if(since>F.p+14)k=Math.ceil((since-F.h)/F.p);
+  if(since>F.p+35)k=Math.ceil((since-F.h)/F.p);
   const next=add(last,F.p*k),d=diff(next,today);
-  return{A,real,out,last,F,n,next,d,proj:k>1,shift:k===1&&d>0&&d<=14,lo:add(next,-F.h),hi:add(next,F.h),ov:add(next,-14),day:diff(add(last,F.p*(k-1)),today)+1};
+  return{A,real,out,last,F,n,next,d,proj:k>1,shift:k===1&&d>0&&d<=35,lo:add(next,-F.h),hi:add(next,F.h),ov:add(next,-14),day:diff(add(last,F.p*(k-1)),today)+1};
 }
 function fert(m){
   const d=diff(today,m.ov),h=m.F.h;
@@ -396,7 +429,8 @@ $('#obok').onclick=async()=>{
   const a=Math.round(+$('#oa').value),p=Math.round(+$('#oc').value),g=Math.round(+$('#og').value),er=$('#oer'),msg=checkP(a,p,g);
   if(msg){er.textContent=msg;er.classList.remove('hide');return}
   prof={age:a,cyc:p+g,gap:g,period:p,open:null,notif:false};
-  await saveProf();$('#ob').classList.add('hide');renderAll();
+  $('#ob').classList.add('hide');resetView();renderAll();
+  await saveProf();
 };
 
 /* ---------- редактирование границ месячных ---------- */
@@ -477,18 +511,32 @@ $('#sok').onclick=async()=>{
   const was=!!(prof&&prof.notif),n=$('#sn').checked;
   prof=Object.assign(prof||{open:null},{age:a,period:p,gap:g,cyc:p+g,notif:n});
   if(n&&!was){try{tg.requestWriteAccess&&tg.requestWriteAccess()}catch(e){}}
-  $('#se').classList.add('hide');renderAll();await saveProf();
+  $('#se').classList.add('hide');resetView();renderAll();await saveProf();
 };
 const wantCal=()=>!!((tg&&tg.initDataUnsafe&&tg.initDataUnsafe.start_param==='cal')||/[?&]tab=cal|#cal/.test(location.search+location.hash));
 
+function openProfile(){const u='https://t.me/nikolas7philips';try{if(tg&&tg.openTelegramLink&&(inTG||(tg.platform&&tg.platform!=='unknown')))tg.openTelegramLink(u);else window.open(u,'_blank')}catch(e){try{window.open(u,'_blank')}catch(x){}}}
+$('#donate').onclick=openProfile;$('#spl').onclick=openProfile;
+setTimeout(()=>$('#splash').classList.add('out'),2200);setTimeout(()=>$('#splash').classList.add('hide'),2500);
+function openInfo(){const sp=$('#splash');sp.classList.add('info','out');sp.classList.remove('hide');requestAnimationFrame(()=>requestAnimationFrame(()=>sp.classList.remove('out')))}
+function closeInfo(){const sp=$('#splash');sp.classList.add('out');setTimeout(()=>{sp.classList.add('hide');sp.classList.remove('info')},300)}
+$('#info').onclick=openInfo;$('#spx').onclick=closeInfo;
+
 /* ---------- запуск ---------- */
 $('#wd').innerHTML=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].map(x=>'<div class="wd">'+x+'</div>').join('');
-$('#prev').onclick=()=>{view.m--;if(view.m<0){view.m=11;view.y--}renderCal()};
-$('#next').onclick=()=>{view.m++;if(view.m>11){view.m=0;view.y++}renderCal()};
+function shiftMonth(d){view.m+=d;if(view.m<0){view.m=11;view.y--}if(view.m>11){view.m=0;view.y++}renderCal()}
+$('#prev').onclick=()=>shiftMonth(-1);
+$('#next').onclick=()=>shiftMonth(1);
+(function(){
+  const el=document.querySelector('#calv>.card');let x0=0,y0=0,t0=0;
+  el.addEventListener('touchstart',e=>{const t=e.changedTouches[0];x0=t.clientX;y0=t.clientY;t0=Date.now()},{passive:true});
+  el.addEventListener('touchend',e=>{const t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5&&Date.now()-t0<800){hap();shiftMonth(dx<0?1:-1)}},{passive:true});
+})();
 $('#cal').onclick=e=>{const b=e.target.closest('[data-d]');if(!b)return;sel=b.dataset.d;snap=JSON.stringify(data);snapOpen=prof?prof.open:null;touched=new Set();sheet();$('#ov').classList.remove('hide')};
 $('#sh').onclick=e=>{const b=e.target.closest('[data-a]');if(b)act(b)};
 $('#ov').onclick=e=>{if(e.target.id==='ov')$('#ov').classList.add('hide')};
-$('#agree').onclick=async()=>{if($('#shortcut').checked)addShortcut();await store.set('consent','1');consent=true;$('#consent').classList.add('hide');if(!prof)$('#ob').classList.remove('hide')};
+$('#agree').onclick=()=>{if($('#shortcut').checked)addShortcut();consent=true;$('#consent').classList.add('hide');if(!prof)$('#ob').classList.remove('hide');store.set('consent','1')};
 $('#del').onclick=()=>$('#cf').classList.remove('hide');
 $('#cfn').onclick=()=>$('#cf').classList.add('hide');
 $('#cfy').onclick=async()=>{
